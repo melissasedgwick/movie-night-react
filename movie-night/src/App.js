@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Header from './components/Header.js'
-import ListCreate from './pages/ListCreate.js'
-import ListDelete from './pages/ListDelete.js'
-import ListEdit from './pages/ListEdit.js'
-import ListAll from './pages/ListAll.js'
-import ListIndividual from './pages/ListIndividual.js'
+import Header from './components/Header'
+import ListCreate from './pages/ListCreate'
+import ListDelete from './pages/ListDelete'
+import ListEdit from './pages/ListEdit'
+import ListAll from './pages/ListAll'
+import ListIndividual from './pages/ListIndividual'
 
 class App extends React.Component {
   render() {
