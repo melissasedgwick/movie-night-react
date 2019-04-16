@@ -38,8 +38,11 @@ describe.only('<GoogleAuth />', () => {
     });
 
     it('should call signIn if isSignedIn', () => {
-      const signIn = jest.fn();
+      const signIn = jest.fn((id) => id);
       const wrapper = shallow(<GoogleAuth signIn={signIn} />);
+      const getId = jest.fn(() => 1);
+      const get = jest.fn(() => ({ getId }));
+      wrapper.instance().auth = { currentUser: { get } };
       wrapper.instance().onAuthChange(true);
 
       expect(signIn).toHaveBeenCalled();
@@ -60,6 +63,16 @@ describe.only('<GoogleAuth />', () => {
 
       expect(wrapper.instance().onSignInClick).toBeInstanceOf(Function);
     });
+
+    it('should call signIn function', () => {
+      const wrapper = shallow(<GoogleAuth />);
+      const signIn = jest.fn();
+      wrapper.instance().auth = { signIn };
+
+      wrapper.instance().onSignInClick();
+
+      expect(signIn).toHaveBeenCalled();
+    });
   });
 
   describe('onSignOutClick', () => {
@@ -67,6 +80,16 @@ describe.only('<GoogleAuth />', () => {
       const wrapper = shallow(<GoogleAuth />);
 
       expect(wrapper.instance().onSignOutClick).toBeInstanceOf(Function);
+    });
+
+    it('should call signOut function', () => {
+      const wrapper = shallow(<GoogleAuth />);
+      const signOut = jest.fn();
+      wrapper.instance().auth = { signOut };
+
+      wrapper.instance().onSignOutClick();
+
+      expect(signOut).toHaveBeenCalled();
     });
   });
 
