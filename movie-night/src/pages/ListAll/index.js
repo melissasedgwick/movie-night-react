@@ -8,7 +8,7 @@ class ListAll extends React.Component {
   }
 
   renderLists() {
-    return this.props.lists[0].map(list => {
+    return this.props.lists.map(list => {
       return(
         <div className="item" key={list.id} >
           <i className="large middle aligned icon film" />
@@ -31,7 +31,7 @@ class ListAll extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-  return { lists: Object.values(state.list) };
+  return { lists: Object.values(state.list.lists) };
 }
 
 export default connect(mapStateToProps, { fetchLists })(ListAll);

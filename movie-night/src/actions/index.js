@@ -1,5 +1,5 @@
 import lists from '../apis/lists';
-import { SIGN_IN, SIGN_OUT, FETCH_LISTS } from './types';
+import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST } from './types';
 
 export const signIn = (userId) => {
   return {
@@ -22,3 +22,12 @@ export const fetchLists = () => async dispatch => {
     payload: response.data
   });
 };
+
+export const createList = (formValues) => async dispatch => {
+  const response = await lists.post('/lists', {...formValues, userId: 1});
+
+  dispatch({
+    type: CREATE_LIST,
+    payload: response.data
+  })
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { createList } from '../../actions';
 
 export class ListCreate extends React.Component {
   renderError({ error, touched }) {
@@ -22,8 +24,8 @@ export class ListCreate extends React.Component {
     );
   }
 
-  onSubmit(formValues) {
-    console.log(formValues);
+  onSubmit = (formValues) => {
+    this.props.createList(formValues);
   }
 
   render() {
@@ -47,8 +49,10 @@ const validate = (formValues) => {
   return errors;
 };
 
-
-export default reduxForm({
+const formWrapped = reduxForm({
   form: 'listCreate',
   validate
 })(ListCreate);
+
+
+export default connect(null, { createList })(formWrapped);
