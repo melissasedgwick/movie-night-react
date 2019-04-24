@@ -99,6 +99,16 @@ describe('<ListCreate />', () => {
 
       expect(onSubmit).toBeInstanceOf(Function);
     });
+
+    it('should call createList with the formValues', () => {
+      const createList = jest.fn();
+      const formValues = { title: 'Movie List' };
+
+      const wrapper = shallow(<ListCreate {...props} createList={createList} />);
+      wrapper.instance().onSubmit(formValues);
+
+      expect(createList).toHaveBeenCalledWith(formValues);
+    });
   });
 
   describe('header', () => {
