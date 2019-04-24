@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchLists } from '../../actions';
 
-class ListAll extends React.Component {
+export class ListAll extends React.Component {
   componentDidMount() {
     this.props.fetchLists();
   }
@@ -23,7 +23,7 @@ class ListAll extends React.Component {
   render() {
     return (
       <div>
-        <h2>ListAll</h2>
+        <h2>Movie Lists:</h2>
         <div className="ui celled list">{this.renderLists()}</div>
       </div>
     );
