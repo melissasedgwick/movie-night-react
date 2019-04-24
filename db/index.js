@@ -22,6 +22,7 @@ app.get('/', (request, response) => {
 
 app.get('/lists', db.getLists)
 app.post('/lists', db.createList)
+app.get('/lists/:id', db.getListById)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

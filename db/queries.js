@@ -19,15 +19,27 @@ const getLists = (request, response) => {
 const createList = (request, response) => {
  const { title, userId } = request.body
 
- pool.query('INSERT INTO lists (title, userId) VALUES ($1, $2) RETURNING *', [title, userId], (error, result) => {
+ pool.query('INSERT INTO lists (title, userId) VALUES ($1, $2) RETURNING *', [title, userId], (error, results) => {
    if (error) {
      throw error
    }
-   response.status(201).send(result.rows[0])
+   response.status(201).send(results.rows[0])
+ })
+}
+
+const getListById = (request, response) => {
+ const id = parseInt(request.params.id)
+
+ pool.query('SELECT * FROM lists WHERE id = $1', [id], (error, results) => {
+   if (error) {
+     throw error
+   }
+   response.status(200).json(results.rows)
  })
 }
 
 module.exports = {
   getLists,
-  createList
+  createList,
+  getListById
 }
