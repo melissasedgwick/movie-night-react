@@ -16,6 +16,18 @@ const getLists = (request, response) => {
   })
 }
 
+const createList = (request, response) => {
+ const { title, userId } = request.body
+
+ pool.query('INSERT INTO lists (title, userId) VALUES ($1, $2) RETURNING *', [title, userId], (error, result) => {
+   if (error) {
+     throw error
+   }
+   response.status(201).send(result.rows[0])
+ })
+}
+
 module.exports = {
-  getLists
+  getLists,
+  createList
 }
