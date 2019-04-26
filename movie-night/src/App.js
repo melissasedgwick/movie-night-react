@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header'
 import ListCreate from './pages/ListCreate'
 import ListDelete from './pages/ListDelete'
@@ -14,11 +14,13 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route path="/" exact component={ListAll} />
-            <Route path="/list/new" component={ListCreate} />
-            <Route path="/list/edit" component={ListEdit} />
-            <Route path="/list/delete" component={ListDelete} />
-            <Route path="/list/show" component={ListIndividual} />
+            <Switch>
+              <Route path="/" exact component={ListAll} />
+              <Route path="/list/new" component={ListCreate} />
+              <Route path="/list/edit" component={ListEdit} />
+              <Route path="/list/delete" component={ListDelete} />
+              <Route path="/list/:id" component={ListIndividual} />
+            </Switch>
           </div>
         </BrowserRouter>
       </div>
