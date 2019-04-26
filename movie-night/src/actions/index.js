@@ -23,8 +23,10 @@ export const fetchLists = () => async dispatch => {
   });
 };
 
-export const createList = (formValues) => async dispatch => {
-  const response = await lists.post('/lists', {...formValues, userId: 1});
+export const createList = (formValues) => async (dispatch, getState) => {
+  const { userId } = getState().auth;
+
+  const response = await lists.post('/lists', {...formValues, userId });
 
   dispatch({
     type: CREATE_LIST,
