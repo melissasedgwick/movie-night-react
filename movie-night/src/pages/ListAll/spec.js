@@ -39,6 +39,48 @@ describe('<ListAll />', () => {
     });
   });
 
+  describe('renderEditDelete', () => {
+    const [list] = propsWithLists.lists;
+
+    describe('when the logged in user does not match the list userId', () => {
+      it('should return undefined', () => {
+        const wrapper = shallow(<ListAll {...props} currentUserId={3} />);
+        const result = wrapper.instance().renderEditDelete(list);
+
+        expect(result).toEqual(undefined);
+      });
+    });
+
+    describe('when the logged in user matches the list userId', () => {
+      it('should render two buttons', () => {
+        const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
+        const result = wrapper.instance().renderEditDelete(list);
+        const buttons = result.props.children;
+
+        expect(buttons[0].type).toEqual('button');
+        expect(buttons[1].type).toEqual('button');
+      });
+
+      it('should render an `Edit` button', () => {
+        const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
+        const result = wrapper.instance().renderEditDelete(list);
+        const buttons = result.props.children;
+
+        expect(buttons[0].props.children).toEqual('Edit');
+      });
+
+      it('should render a `Delete` button', () => {
+        const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
+        const result = wrapper.instance().renderEditDelete(list);
+        const buttons = result.props.children;
+
+        expect(buttons[1].props.children).toEqual('Delete');
+      });
+
+
+    });
+  });
+
   describe('renderLists', () => {
     describe('when there are no lists', () => {
       it('should return an empty array', () => {
@@ -66,16 +108,16 @@ describe('<ListAll />', () => {
         const firstDivChildren = result[0].props.children;
         const secondDivChildren = result[1].props.children;
 
-        expect(firstDivChildren[0].type).toEqual('i');
-        expect(secondDivChildren[0].type).toEqual('i');
+        expect(firstDivChildren[1].type).toEqual('i');
+        expect(secondDivChildren[1].type).toEqual('i');
       });
 
       it('should render the title for each list', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstLink = result[0].props.children[1].props.children;
-        const secondLink = result[1].props.children[1].props.children;
+        const firstLink = result[0].props.children[2].props.children;
+        const secondLink = result[1].props.children[2].props.children;
 
         expect(firstLink.props.children).toEqual('Horror Movies');
         expect(secondLink.props.children).toEqual('Action Movies');
@@ -85,11 +127,44 @@ describe('<ListAll />', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstLink = result[0].props.children[1].props.children;
-        const secondLink = result[1].props.children[1].props.children;
+        const firstLink = result[0].props.children[2].props.children;
+        const secondLink = result[1].props.children[2].props.children;
 
         expect(firstLink.props.to).toEqual('list/1');
         expect(secondLink.props.to).toEqual('list/2');
+      });
+
+      it('should call renderEditDelete for each list', () => {
+        const renderEditDelete = jest.fn();
+        const wrapper = shallow(<ListAll {...propsWithLists} />);
+
+        wrapper.instance().renderEditDelete = renderEditDelete;
+        wrapper.instance().renderLists();
+
+        expect(renderEditDelete).toHaveBeenCalledTimes(2);
+
+      });
+    });
+  });
+
+  describe('renderCreate', () => {
+    describe('when user is not signed in', () => {
+      it('should return undefined', () => {
+        const wrapper = shallow(<ListAll {...props} isSignedIn={false} />);
+        const result = wrapper.instance().renderCreate();
+
+        expect(result).toEqual(undefined);
+      });
+    });
+
+    describe('when user is signed in', () => {
+      it('should render a `Create New Movie List` Link', () => {
+        const wrapper = shallow(<ListAll {...props} isSignedIn={true} />);
+        const result = wrapper.instance().renderCreate();
+        const link = result.props.children;
+
+        expect(link.props.to).toEqual('list/new');
+        expect(link.props.children).toEqual('Create New Movie List');
       });
     });
   });
@@ -111,6 +186,16 @@ describe('<ListAll />', () => {
       wrapper.instance().render();
 
       expect(renderLists).toHaveBeenCalled();
+    });
+
+    it('should call renderCreate', () => {
+      const renderCreate = jest.fn();
+      const wrapper = shallow(<ListAll {...props} />);
+
+      wrapper.instance().renderCreate = renderCreate;
+      wrapper.instance().render();
+
+      expect(renderCreate).toHaveBeenCalled();
     });
   });
 });
