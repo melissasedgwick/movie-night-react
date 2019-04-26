@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchLists } from '../../actions';
 
 export class ListAll extends React.Component {
@@ -13,7 +14,9 @@ export class ListAll extends React.Component {
         <div className="item" key={list.id} >
           <i className="large middle aligned icon film" />
           <div className="content">
-            {list.title}
+            <Link to={`list/${list.id}`} className="header">
+              {list.title}
+            </Link>
           </div>
         </div>
       );

@@ -74,12 +74,23 @@ describe('<ListAll />', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstDivText = result[0].props.children[1].props.children;
-        const secondDivText = result[1].props.children[1].props.children;
+        const firstLink = result[0].props.children[1].props.children;
+        const secondLink = result[1].props.children[1].props.children;
 
-        expect(firstDivText).toEqual('Horror Movies');
-        expect(secondDivText).toEqual('Action Movies');
-      })
+        expect(firstLink.props.children).toEqual('Horror Movies');
+        expect(secondLink.props.children).toEqual('Action Movies');
+      });
+
+      it('should render the a link to the indidual lists', () => {
+        const wrapper = shallow(<ListAll {...propsWithLists} />);
+        const result = wrapper.instance().renderLists();
+
+        const firstLink = result[0].props.children[1].props.children;
+        const secondLink = result[1].props.children[1].props.children;
+
+        expect(firstLink.props.to).toEqual('list/1');
+        expect(secondLink.props.to).toEqual('list/2');
+      });
     });
   });
 
