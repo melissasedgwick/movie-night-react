@@ -22,9 +22,9 @@ To set up the database:
 1. Open PostgreSQL in the terminal: `psql`.
 2. Create a movie-night database:  `CREATE DATABASE movie-night;`
 3. Navigate into the database: `\c movie-night`
-4. Set up the lists table: `CREATE TABLE lists(id SERIAL PRIMARY KEY, title VARCHAR(60), userId integer NOT NULL);`
+4. Set up the lists table: `CREATE TABLE lists(id SERIAL PRIMARY KEY, title VARCHAR(60), userId numeric NOT NULL);`
 
-Once you've set up your database, run `node index.js` in the `db` directory to start the API. You should see 'App running on port 3001' in the terminal. 
+Once you've set up your database, run `node index.js` in the `db` directory to start the API. You should see 'App running on port 3001' in the terminal.
 
 ## Tests ##
 
