@@ -2,18 +2,32 @@
 
 A create-react-app project.
 
-## Available Scripts
 
-In the project directory, you can run:
+## To Start ##
 
-### `npm start`
+Clone this repository and navigate into it.
 
-Runs the app in the development mode.<br>
+Run `npm install` in both the `movie-night` and `db` directories.
+
+### Web Application ###
+
+Run `npm start` in the `movie-night` directory.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### Database and API ###
 
-### `npm test`
+To set up the database:
 
-Launches the test runner in the interactive watch mode.<br>
+1. Open PostgreSQL in the terminal: `psql`.
+2. Create a movie-night database:  `CREATE DATABASE movie-night;`
+3. Navigate into the database: `\c movie-night`
+4. Set up the lists table: `CREATE TABLE lists(id SERIAL PRIMARY KEY, title VARCHAR(60), userId integer NOT NULL);`
+
+Once you've set up your database, run `node index.js` in the `db` directory to start the API. You should see 'App running on port 3001' in the terminal. 
+
+## Tests ##
+
+Run `npm test` in the `movie-night` directory.
+
+This launches the test runner in the interactive watch mode.
