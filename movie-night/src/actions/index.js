@@ -1,4 +1,5 @@
 import lists from '../apis/lists';
+import history from '../history';
 import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST } from './types';
 
 export const signIn = (userId) => {
@@ -31,7 +32,8 @@ export const createList = (formValues) => async (dispatch, getState) => {
   dispatch({
     type: CREATE_LIST,
     payload: response.data
-  })
+  });
+  history.push('/');
 }
 
 export const fetchList = (id) => async dispatch => {
