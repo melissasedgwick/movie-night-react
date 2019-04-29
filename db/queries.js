@@ -38,8 +38,25 @@ const getListById = (request, response) => {
  })
 }
 
+const updateList = (request, response) => {
+  const id = parseInt(request.params.id)
+  const { title } = request.body
+
+  pool.query(
+    'UPDATE lists SET title = $1 WHERE id = $2 RETURNING *',
+    [title, id],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(results.rows[0])
+    }
+  )
+}
+
 module.exports = {
   getLists,
   createList,
-  getListById
+  getListById,
+  updateList
 }
