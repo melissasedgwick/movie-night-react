@@ -9,7 +9,7 @@ export class ListAll extends React.Component {
   }
 
   renderEditDelete(list) {
-    if (list.userId === this.props.currentUserId) {
+    if (list.userid === this.props.currentUserId) {
       return (
         <div className="right floated content">
           <button className="ui button primary">
