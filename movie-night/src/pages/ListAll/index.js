@@ -12,9 +12,9 @@ export class ListAll extends React.Component {
     if (list.userid === this.props.currentUserId) {
       return (
         <div className="right floated content">
-          <button className="ui button primary">
+          <Link to={`/list/edit/${list.id}`} className="ui button primary">
             Edit
-          </button>
+          </Link>
           <button className="ui button negative">
             Delete
           </button>

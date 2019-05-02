@@ -1,6 +1,6 @@
 import lists from '../apis/lists';
 import history from '../history';
-import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST } from './types';
+import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST, EDIT_LIST } from './types';
 
 export const signIn = (userId) => {
   return {
@@ -33,14 +33,26 @@ export const createList = (formValues) => async (dispatch, getState) => {
     type: CREATE_LIST,
     payload: response.data
   });
+  
   history.push('/');
 }
 
 export const fetchList = (id) => async dispatch => {
   const response = await lists.get(`/lists/${id}`, { id });
 
-    dispatch({
-      type: FETCH_LIST,
-      payload: response.data
-    })
+  dispatch({
+    type: FETCH_LIST,
+    payload: response.data
+  })
+}
+
+export const editList = (id, formValues) => async dispatch => {
+  const response = await lists.patch(`/lists/${id}`, { ...formValues, id });
+
+  dispatch({
+    type: EDIT_LIST,
+    payload: response.data
+  });
+
+  history.push('/');
 }

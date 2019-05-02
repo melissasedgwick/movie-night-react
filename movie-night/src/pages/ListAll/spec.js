@@ -14,12 +14,12 @@ describe('<ListAll />', () => {
     lists: [{
       id: 1,
       title: 'Horror Movies',
-      userId: 1
+      userid: 1
     },
     {
       id: 2,
       title: 'Action Movies',
-      userId: 1
+      userid: 1
     }],
     fetchLists
   }
@@ -52,29 +52,20 @@ describe('<ListAll />', () => {
     });
 
     describe('when the logged in user matches the list userId', () => {
-      it('should render two buttons', () => {
+      it('should render an `Edit` Link', () => {
         const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
         const result = wrapper.instance().renderEditDelete(list);
-        const buttons = result.props.children;
+        const link = result.props.children[0];
 
-        expect(buttons[0].type).toEqual('button');
-        expect(buttons[1].type).toEqual('button');
-      });
-
-      it('should render an `Edit` button', () => {
-        const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
-        const result = wrapper.instance().renderEditDelete(list);
-        const buttons = result.props.children;
-
-        expect(buttons[0].props.children).toEqual('Edit');
+        expect(link.props.children).toEqual('Edit');
       });
 
       it('should render a `Delete` button', () => {
         const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
         const result = wrapper.instance().renderEditDelete(list);
-        const buttons = result.props.children;
+        const button = result.props.children[1];
 
-        expect(buttons[1].props.children).toEqual('Delete');
+        expect(button.props.children).toEqual('Delete');
       });
 
 
