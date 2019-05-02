@@ -60,15 +60,13 @@ describe('<ListAll />', () => {
         expect(link.props.children).toEqual('Edit');
       });
 
-      it('should render a `Delete` button', () => {
+      it('should render a `Delete` Link', () => {
         const wrapper = shallow(<ListAll {...props} currentUserId={1} />);
         const result = wrapper.instance().renderEditDelete(list);
-        const button = result.props.children[1];
+        const link = result.props.children[1];
 
-        expect(button.props.children).toEqual('Delete');
+        expect(link.props.children).toEqual('Delete');
       });
-
-
     });
   });
 

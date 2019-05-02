@@ -19,7 +19,7 @@ class App extends React.Component {
               <Route path="/" exact component={ListAll} />
               <Route path="/list/new" component={ListCreate} />
               <Route path="/list/edit/:id" component={ListEdit} />
-              <Route path="/list/delete" component={ListDelete} />
+              <Route path="/list/delete/:id" component={ListDelete} />
               <Route path="/list/:id" component={ListIndividual} />
             </Switch>
           </div>

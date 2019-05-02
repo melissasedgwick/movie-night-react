@@ -1,6 +1,6 @@
 import lists from '../apis/lists';
 import history from '../history';
-import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST, EDIT_LIST } from './types';
+import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST, EDIT_LIST, DELETE_LIST } from './types';
 
 export const signIn = (userId) => {
   return {
@@ -33,7 +33,7 @@ export const createList = (formValues) => async (dispatch, getState) => {
     type: CREATE_LIST,
     payload: response.data
   });
-  
+
   history.push('/');
 }
 
@@ -55,4 +55,15 @@ export const editList = (id, formValues) => async dispatch => {
   });
 
   history.push('/');
+}
+
+export const deleteList = (id) => async dispatch => {
+  const response = await lists.delete(`/lists/${id}`, { id });
+
+  dispatch({
+    type: DELETE_LIST,
+    payload: response.data
+  });
+
+  history.push('/')
 }
