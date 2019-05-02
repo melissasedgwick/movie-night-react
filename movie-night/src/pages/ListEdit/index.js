@@ -16,14 +16,14 @@ export class ListEdit extends React.Component {
     return (
       <div>
         <h2 className="ui centre aligned icon header">Edit List</h2>
-        <ListForm onSubmit={this.onSubmit} />
+        <ListForm onSubmit={this.onSubmit} initialValues={this.props.list} />
       </div>
     );
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return { lists: state.list[ownProps.match.params.id] };
+  return { list: state.list[ownProps.match.params.id] };
 }
 
 export default connect(mapStateToProps, { fetchList, editList })(ListEdit);
