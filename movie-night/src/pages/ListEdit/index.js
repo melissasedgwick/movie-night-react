@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchList, editList } from '../../actions';
+import history from '../../history';
 import ListForm from '../../components/ListForm/';
 
 export class ListEdit extends React.Component {
@@ -13,6 +14,11 @@ export class ListEdit extends React.Component {
   }
 
   render() {
+    if (!this.props.isSignedIn) {
+      history.push('/oops/signIn');
+      return;
+    }
+
     return (
       <div>
         <h2 className="ui centre aligned icon header">Edit List</h2>
@@ -23,7 +29,11 @@ export class ListEdit extends React.Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return { list: state.list[ownProps.match.params.id] };
+  return {
+    list: state.list[ownProps.match.params.id],
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn
+  };
 }
 
 export default connect(mapStateToProps, { fetchList, editList })(ListEdit);
