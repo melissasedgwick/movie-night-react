@@ -54,9 +54,21 @@ const updateList = (request, response) => {
   )
 }
 
+const deleteList = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('DELETE FROM lists WHERE id = $1 RETURNING *', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(results.rows[0])
+  })
+}
+
 module.exports = {
   getLists,
   createList,
   getListById,
-  updateList
+  updateList,
+  deleteList
 }
