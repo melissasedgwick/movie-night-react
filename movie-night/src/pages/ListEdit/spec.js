@@ -46,12 +46,16 @@ describe('<ListEdit />', () => {
       expect(header.text()).toEqual('Edit List');
     });
 
-    it('should render a ReduxForm with an onSubmit prop', () => {
-      const wrapper = shallow(<ListEdit {...props} />);
+    it('should render a ReduxForm with an onSubmit and initialValues prop', () => {
+      const list = { title: 'Movie List Title' }
+
+      const wrapper = shallow(<ListEdit {...props} list={list} />);
       const reduxForm = wrapper.find('ReduxForm');
+      const { onSubmit } = wrapper.instance();
 
       expect(reduxForm.length).toEqual(1);
-      expect(reduxForm.props().onSubmit).toBeInstanceOf(Function);
+      expect(reduxForm.props().onSubmit).toEqual(onSubmit);
+      expect(reduxForm.props().initialValues).toEqual(list);
     });
   });
 });
