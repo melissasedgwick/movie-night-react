@@ -80,32 +80,44 @@ describe('<ListDelete />', () => {
   });
 
   describe('render', () => {
-    it('should return a header with the text `Delete List`', () => {
+    it('should render a Modal', () => {
       const wrapper = shallow(<ListDelete {...props} />);
-      const header = wrapper.find('h2');
+      const modal = wrapper.find('Modal');
 
-      expect(header.length).toEqual(1);
-      expect(header.text()).toEqual('Delete List');
+      expect(modal.length).toEqual(1);
     });
 
-    it('should call renderContent', () => {
-      const renderContent = jest.fn();
-
+    it('Modal should have correct title prop', () => {
       const wrapper = shallow(<ListDelete {...props} />);
-      wrapper.instance().renderContent = renderContent;
-      wrapper.instance().render();
+      const modal = wrapper.find('Modal');
 
-      expect(renderContent).toHaveBeenCalled();
+      expect(modal.props().title).toEqual('Delete List');
     });
 
-    it('should call renderActions', () => {
-      const renderActions = jest.fn();
-
+    it('Modal should have correct content prop', () => {
       const wrapper = shallow(<ListDelete {...props} />);
-      wrapper.instance().renderActions = renderActions;
-      wrapper.instance().render();
+      const renderContent = wrapper.instance().renderContent();
 
-      expect(renderActions).toHaveBeenCalled();
+      const modal = wrapper.find('Modal');
+
+      expect(JSON.stringify(modal.props().content)).toEqual(JSON.stringify(renderContent));
+    });
+
+    it('Modal should have correct actions prop', () => {
+      const wrapper = shallow(<ListDelete {...props} />);
+      const renderActions = wrapper.instance().renderActions();
+
+      const modal = wrapper.find('Modal');
+
+      expect(JSON.stringify(modal.props().actions)).toEqual(JSON.stringify(renderActions));
+    });
+
+    it('Modal should have an onDismiss prop', () => {
+      const wrapper = shallow(<ListDelete {...props} />);
+
+      const modal = wrapper.find('Modal');
+
+      expect(modal.props().onDismiss).toBeInstanceOf(Function);
     });
   });
 });

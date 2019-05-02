@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchList, deleteList } from '../../actions';
+import history from '../../history';
+import Modal from '../../components/Modal'
 
 export class ListDelete extends React.Component {
   componentDidMount() {
@@ -32,9 +34,12 @@ export class ListDelete extends React.Component {
   render() {
     return (
       <div>
-        <h2>Delete List</h2>
-        {this.renderContent()}
-        {this.renderActions()}
+        <Modal
+          title="Delete List"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/')}
+        />
       </div>
     );
   };
