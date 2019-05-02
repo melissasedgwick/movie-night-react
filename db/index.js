@@ -13,6 +13,7 @@ app.use(
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
   next();
 });
 
@@ -23,7 +24,7 @@ app.get('/', (request, response) => {
 app.get('/lists', db.getLists)
 app.post('/lists', db.createList)
 app.get('/lists/:id', db.getListById)
-app.put('/lists/:id', db.updateList)
+app.patch('/lists/:id', db.updateList)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
