@@ -10,7 +10,7 @@ describe('<OopsSignIn />', () => {
     expect(wrapper.length).toEqual(1);
   });
 
-  describe('render', () => {
+  describe('componentDidMount', () => {
     describe('when signed in', () => {
       it('should take user back to previous page', () => {
         const historySpy = jest.spyOn(history, 'goBack');
@@ -19,45 +19,57 @@ describe('<OopsSignIn />', () => {
         expect(historySpy).toHaveBeenCalled();
       });
     });
+  });
 
-    describe('when not signed in', () => {
-      it('should render a h2 with correct text', () => {
-        const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
-        const h2 = wrapper.find('h2');
+  describe('componentDidUpdate', () => {
+    describe('when signed in', () => {
+      it('should take user back to previous page', () => {
+        const wrapper = shallow(<OopsSignIn isSignedIn={true} />);
+        const historySpy = jest.spyOn(history, 'goBack');
+        wrapper.instance().componentDidUpdate();
 
-        expect(h2.length).toEqual(1);
-        expect(h2.text()).toEqual('Oops! You need to be signed in to view this page!');
+        expect(historySpy).toHaveBeenCalled();
       });
+    });
+  });
 
-      it('should render a h3 with the text `Please sign in:`', () => {
-        const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
-        const h3 = wrapper.find('h3');
+  describe('render', () => {
+    it('should render a h2 with correct text', () => {
+      const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
+      const h2 = wrapper.find('h2');
 
-        expect(h3.at(0).text()).toEqual('Please sign in:');
-      });
+      expect(h2.length).toEqual(1);
+      expect(h2.text()).toEqual('Oops! You need to be signed in to view this page!');
+    });
 
-      it('should render a GoogleAuth component', () => {
-        const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
-        const googleAuth = wrapper.find('Connect(GoogleAuth)');
+    it('should render a h3 with the text `Please sign in:`', () => {
+      const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
+      const h3 = wrapper.find('h3');
 
-        expect(googleAuth.length).toEqual(1);
-      });
+      expect(h3.at(0).text()).toEqual('Please sign in:');
+    });
 
-      it('should render a h3 with the text `Or return to the home page:`', () => {
-        const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
-        const h3 = wrapper.find('h3');
+    it('should render a GoogleAuth component', () => {
+      const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
+      const googleAuth = wrapper.find('Connect(GoogleAuth)');
 
-        expect(h3.at(1).text()).toEqual('Or return to the home page:');
-      });
+      expect(googleAuth.length).toEqual(1);
+    });
 
-      it('should render a Link to the homepage', () => {
-        const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
-        const link = wrapper.find('Link');
+    it('should render a h3 with the text `Or return to the home page:`', () => {
+      const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
+      const h3 = wrapper.find('h3');
 
-        expect(link.length).toEqual(1);
-        expect(link.props().to).toEqual('/');
-        expect(link.props().children).toEqual('All Movie Lists');
-      });
+      expect(h3.at(1).text()).toEqual('Or return to the home page:');
+    });
+
+    it('should render a Link to the homepage', () => {
+      const wrapper = shallow(<OopsSignIn isSignedIn={false} />);
+      const link = wrapper.find('Link');
+
+      expect(link.length).toEqual(1);
+      expect(link.props().to).toEqual('/');
+      expect(link.props().children).toEqual('All Movie Lists');
     });
   });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import history from '../../history';
 import { ListDelete } from './';
 
 describe('<ListDelete />', () => {
@@ -19,11 +20,22 @@ describe('<ListDelete />', () => {
   });
 
   describe('componentDidMount', () => {
-    it('should call fetchList with id', () => {
-      const wrapper = shallow(<ListDelete {...props} />);
-      wrapper.instance().componentDidMount();
+    describe('when signed in', () => {
+      it('should call fetchList with id', () => {
+        const wrapper = shallow(<ListDelete {...props} isSignedIn={true} />);
+        wrapper.instance().componentDidMount();
 
-      expect(fetchList).toHaveBeenCalledWith(1);
+        expect(fetchList).toHaveBeenCalledWith(1);
+      });
+    });
+
+    describe('when not signed in', () => {
+      it('should redirect user to /oops/signIn page', () => {
+        const historySpy = jest.spyOn(history, 'push');
+        shallow(<ListDelete {...props} isSignedIn={false} />);
+
+        expect(historySpy).toHaveBeenCalledWith('/oops/signIn');
+      });
     });
   });
 

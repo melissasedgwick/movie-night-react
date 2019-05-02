@@ -7,6 +7,10 @@ import Modal from '../../components/Modal'
 
 export class ListDelete extends React.Component {
   componentDidMount() {
+    if (!this.props.isSignedIn) {
+      history.push('/oops/signIn');
+    }
+    
     this.props.fetchList(this.props.match.params.id)
   }
 
@@ -46,7 +50,11 @@ export class ListDelete extends React.Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return { list: state.list[ownProps.match.params.id] }
+  return {
+    list: state.list[ownProps.match.params.id],
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn
+  };
 }
 
 export default connect(mapStateToProps, { fetchList, deleteList })(ListDelete);

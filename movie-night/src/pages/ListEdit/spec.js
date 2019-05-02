@@ -25,11 +25,22 @@ describe('<ListEdit />', () => {
   });
 
   describe('componentDidMount', () => {
-    it('should call fetchList with correct parameter', () => {
-      const wrapper = shallow(<ListEdit {...props} />);
-      wrapper.instance().componentDidMount();
+    describe('when signed in', () => {
+      it('should call fetchList with correct parameter', () => {
+        const wrapper = shallow(<ListEdit {...props} />);
+        wrapper.instance().componentDidMount();
 
-      expect(fetchList).toHaveBeenCalledWith(1);
+        expect(fetchList).toHaveBeenCalledWith(1);
+      });
+    });
+
+    describe('when not signed in', () => {
+      it('should take user to the oops/signIn page', () => {
+        const historySpy = jest.spyOn(history, 'push');
+        shallow(<ListEdit {...propsNotSignedIn} />);
+
+        expect(historySpy).toHaveBeenCalledWith('/oops/signIn');
+      });
     });
   });
 
@@ -46,35 +57,24 @@ describe('<ListEdit />', () => {
   });
 
   describe('render', () => {
-    describe('when signed in', () => {
-      it('should render a header with the text `Edit List`', () => {
-        const wrapper = shallow(<ListEdit {...props} />);
-        const header = wrapper.find('h2');
+    it('should render a header with the text `Edit List`', () => {
+      const wrapper = shallow(<ListEdit {...props} />);
+      const header = wrapper.find('h2');
 
-        expect(header.length).toEqual(1);
-        expect(header.text()).toEqual('Edit List');
-      });
-
-      it('should render a ReduxForm with an onSubmit and initialValues prop', () => {
-        const list = { title: 'Movie List Title' }
-
-        const wrapper = shallow(<ListEdit {...props} list={list} />);
-        const reduxForm = wrapper.find('ReduxForm');
-        const { onSubmit } = wrapper.instance();
-
-        expect(reduxForm.length).toEqual(1);
-        expect(reduxForm.props().onSubmit).toEqual(onSubmit);
-        expect(reduxForm.props().initialValues).toEqual(list);
-      });
+      expect(header.length).toEqual(1);
+      expect(header.text()).toEqual('Edit List');
     });
 
-    describe('when not signed in', () => {
-      it('should take user to the oops/signIn page', () => {
-        const historySpy = jest.spyOn(history, 'push');
-        shallow(<ListEdit {...propsNotSignedIn} />);
+    it('should render a ReduxForm with an onSubmit and initialValues prop', () => {
+      const list = { title: 'Movie List Title' }
 
-        expect(historySpy).toHaveBeenCalledWith('/oops/signIn');
-      });
+      const wrapper = shallow(<ListEdit {...props} list={list} />);
+      const reduxForm = wrapper.find('ReduxForm');
+      const { onSubmit } = wrapper.instance();
+
+      expect(reduxForm.length).toEqual(1);
+      expect(reduxForm.props().onSubmit).toEqual(onSubmit);
+      expect(reduxForm.props().initialValues).toEqual(list);
     });
   });
 });

@@ -5,11 +5,19 @@ import GoogleAuth from '../../../components/GoogleAuth';
 import history from '../../../history';
 
 export class OopsSignIn extends React.Component {
-  render() {
+  componentDidMount() {
     if (this.props.isSignedIn) {
       history.goBack();
     }
+  }
 
+  componentDidUpdate() {
+    if (this.props.isSignedIn) {
+      history.goBack();
+    }
+  }
+
+  render() {
     return (
       <div>
         <h2 className="ui centre aligned icon header">Oops! You need to be signed in to view this page!</h2>

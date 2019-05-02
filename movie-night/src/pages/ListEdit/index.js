@@ -6,6 +6,10 @@ import ListForm from '../../components/ListForm/';
 
 export class ListEdit extends React.Component {
   componentDidMount() {
+    if (!this.props.isSignedIn) {
+      history.push('/oops/signIn');
+    }
+    
     this.props.fetchList(this.props.match.params.id);
   }
 
@@ -14,11 +18,6 @@ export class ListEdit extends React.Component {
   }
 
   render() {
-    if (!this.props.isSignedIn) {
-      history.push('/oops/signIn');
-      return;
-    }
-
     return (
       <div>
         <h2 className="ui centre aligned icon header">Edit List</h2>
