@@ -33,6 +33,7 @@ export class ListAll extends React.Component {
             <Link to={`list/${list.id}`} className="header">
               {list.title}
             </Link>
+            <div>by {list.username}</div>
           </div>
         </div>
       );

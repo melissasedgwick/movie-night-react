@@ -14,12 +14,14 @@ describe('<ListAll />', () => {
     lists: [{
       id: 1,
       title: 'Horror Movies',
-      userid: 1
+      userid: 1,
+      username: 'Test User'
     },
     {
       id: 2,
       title: 'Action Movies',
-      userid: 1
+      userid: 1,
+      username: 'Test User'
     }],
     fetchLists
   }
@@ -105,8 +107,8 @@ describe('<ListAll />', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstLink = result[0].props.children[2].props.children;
-        const secondLink = result[1].props.children[2].props.children;
+        const firstLink = result[0].props.children[2].props.children[0];
+        const secondLink = result[1].props.children[2].props.children[0];
 
         expect(firstLink.props.children).toEqual('Horror Movies');
         expect(secondLink.props.children).toEqual('Action Movies');
@@ -116,11 +118,25 @@ describe('<ListAll />', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstLink = result[0].props.children[2].props.children;
-        const secondLink = result[1].props.children[2].props.children;
+        const firstLink = result[0].props.children[2].props.children[0];
+        const secondLink = result[1].props.children[2].props.children[0];
 
         expect(firstLink.props.to).toEqual('list/1');
         expect(secondLink.props.to).toEqual('list/2');
+      });
+
+      it('should render the author\'s name', () => {
+        const wrapper = shallow(<ListAll {...propsWithLists} />);
+        const result = wrapper.instance().renderLists();
+
+        const firstList = result[0].props.children[2];
+        const secondList = result[1].props.children[2];
+
+        const firstAuthor = firstList.props.children[1].props.children.join('')
+        const secondAuthor = secondList.props.children[1].props.children.join('')
+
+        expect(firstAuthor).toEqual('by Test User');
+        expect(secondAuthor).toEqual('by Test User');
       });
 
       it('should call renderEditDelete for each list', () => {
