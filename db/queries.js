@@ -65,10 +65,22 @@ const deleteList = (request, response) => {
   })
 }
 
+const getListsByUserId = (request, response) => {
+  const userid = request.params.userid
+
+  pool.query('SELECT * FROM lists WHERE userid = $1', [userid], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 module.exports = {
   getLists,
   createList,
   getListById,
   updateList,
-  deleteList
+  deleteList,
+  getListsByUserId
 }

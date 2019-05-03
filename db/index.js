@@ -26,6 +26,7 @@ app.post('/lists', db.createList)
 app.get('/lists/:id', db.getListById)
 app.patch('/lists/:id', db.updateList)
 app.delete('/lists/:id', db.deleteList)
+app.get('/lists/user/:userid', db.getListsByUserId)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
