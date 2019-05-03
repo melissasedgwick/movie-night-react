@@ -1,6 +1,7 @@
 import lists from '../apis/lists';
 import history from '../history';
-import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST, FETCH_LIST, EDIT_LIST, DELETE_LIST } from './types';
+import { SIGN_IN, SIGN_OUT, FETCH_LISTS, CREATE_LIST,
+  FETCH_LIST, EDIT_LIST, DELETE_LIST, FETCH_USER_LISTS } from './types';
 
 export const signIn = (userId, userName) => {
   return {
@@ -68,4 +69,13 @@ export const deleteList = (id) => async dispatch => {
   });
 
   history.push('/')
+}
+
+export const fetchUserLists = (userid) => async dispatch => {
+  const response = await lists.get(`/lists/user/${userid}`);
+
+  dispatch({
+    type: FETCH_USER_LISTS,
+    payload: { userid, lists: response.data }
+  });
 }

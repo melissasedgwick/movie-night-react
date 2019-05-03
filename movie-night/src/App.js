@@ -6,6 +6,7 @@ import ListDelete from './pages/ListDelete';
 import ListEdit from './pages/ListEdit';
 import ListAll from './pages/ListAll';
 import ListIndividual from './pages/ListIndividual';
+import ListUser from './pages/ListUser';
 import OopsSignIn from './pages/Oops/SignIn';
 import history from './history';
 
@@ -18,6 +19,7 @@ class App extends React.Component {
             <Header />
             <Switch>
               <Route path="/" exact component={ListAll} />
+              <Route path="/list/user/:userid" component={ListUser} />
               <Route path="/list/new" component={ListCreate} />
               <Route path="/list/edit/:id" component={ListEdit} />
               <Route path="/list/delete/:id" component={ListDelete} />

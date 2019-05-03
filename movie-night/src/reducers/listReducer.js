@@ -1,4 +1,4 @@
-import { FETCH_LISTS, CREATE_LIST, FETCH_LIST } from '../actions/types';
+import { FETCH_LISTS, CREATE_LIST, FETCH_LIST, FETCH_USER_LISTS } from '../actions/types';
 
 const INITIAL_STATE = {
   lists: []
@@ -12,6 +12,8 @@ export default(state = INITIAL_STATE, action) => {
       return {...state, [action.payload.id]: action.payload };
     case FETCH_LIST:
       return { ...state, [action.payload.id]: action.payload };
+    case FETCH_USER_LISTS:
+      return { ...state, [action.payload.userid]: action.payload.lists };
     default:
       return state;
   }
