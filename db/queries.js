@@ -17,9 +17,9 @@ const getLists = (request, response) => {
 }
 
 const createList = (request, response) => {
- const { title, userId } = request.body
+ const { title, userId, userName } = request.body
 
- pool.query('INSERT INTO lists (title, userId) VALUES ($1, $2) RETURNING *', [title, userId], (error, results) => {
+ pool.query('INSERT INTO lists (title, userId, userName) VALUES ($1, $2, $3) RETURNING *', [title, userId, userName], (error, results) => {
    if (error) {
      throw error
    }
