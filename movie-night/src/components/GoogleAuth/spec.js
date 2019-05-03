@@ -37,15 +37,17 @@ describe.only('<GoogleAuth />', () => {
       expect(wrapper.instance().onAuthChange).toBeInstanceOf(Function);
     });
 
-    it('should call signIn if isSignedIn', () => {
+    it('should call signIn with ID and name if isSignedIn', () => {
       const signIn = jest.fn((id) => id);
       const wrapper = shallow(<GoogleAuth signIn={signIn} />);
       const getId = jest.fn(() => 1);
-      const get = jest.fn(() => ({ getId }));
+      const getName = jest.fn(() => 'Name');
+      const getBasicProfile = jest.fn(() => ({ getName }));
+      const get = jest.fn(() => ({ getId, getBasicProfile }));
       wrapper.instance().auth = { currentUser: { get } };
       wrapper.instance().onAuthChange(true);
 
-      expect(signIn).toHaveBeenCalled();
+      expect(signIn).toHaveBeenCalledWith(1, 'Name');
     });
 
     it('should call signOut if not isSignedIn', () => {
