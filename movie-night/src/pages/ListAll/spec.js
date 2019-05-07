@@ -125,18 +125,24 @@ describe('<ListAll />', () => {
         expect(secondLink.props.to).toEqual('list/2');
       });
 
-      it('should render the author\'s name', () => {
+      it('should render the author\'s name as a Link to author\'s page', () => {
         const wrapper = shallow(<ListAll {...propsWithLists} />);
         const result = wrapper.instance().renderLists();
 
-        const firstList = result[0].props.children[2];
-        const secondList = result[1].props.children[2];
+        const firstListAuthor = result[0].props.children[2].props.children[1];
+        const secondListAuthor = result[1].props.children[2].props.children[1];
 
-        const firstAuthor = firstList.props.children[1].props.children.join('')
-        const secondAuthor = secondList.props.children[1].props.children.join('')
+        const firstListAuthorText = firstListAuthor.props.children[0];
+        const firstListAuthorLink = firstListAuthor.props.children[1];
+        const secondListAuthorText = secondListAuthor.props.children[0];
+        const secondListAuthorLink = secondListAuthor.props.children[1];
 
-        expect(firstAuthor).toEqual('by Test User');
-        expect(secondAuthor).toEqual('by Test User');
+        expect(firstListAuthorText).toEqual('by ');
+        expect(firstListAuthorLink.props.children).toEqual('Test User');
+        expect(firstListAuthorLink.props.to).toEqual('list/user/1');
+        expect(secondListAuthorText).toEqual('by ');
+        expect(secondListAuthorLink.props.children).toEqual('Test User');
+        expect(secondListAuthorLink.props.to).toEqual('list/user/1');
       });
 
       it('should call renderEditDelete for each list', () => {
