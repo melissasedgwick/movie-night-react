@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import GoogleAuth from '../GoogleAuth';
+import './styles.css';
 
 class Header extends React.Component {
   render() {
     return (
       <div className="ui secondary pointing menu">
+        <img src={require('../../images/clapperboard.png')} alt="clapper board" className="headerImage" />
         <Link to="/" className="item" id="movie-night-link">
           <h2>Movie Night</h2>
         </Link>
