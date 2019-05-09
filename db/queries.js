@@ -76,11 +76,23 @@ const getListsByUserId = (request, response) => {
   })
 }
 
+const createListMovie = (request, response) => {
+  const { listid, movieid } = request.body
+
+  pool.query('INSERT INTO lists_movies (listid, movieid) VALUES ($1, $2) RETURNING *', [listid, movieid], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(results.rows[0])
+  })
+}
+
 module.exports = {
   getLists,
   createList,
   getListById,
   updateList,
   deleteList,
-  getListsByUserId
+  getListsByUserId,
+  createListMovie
 }

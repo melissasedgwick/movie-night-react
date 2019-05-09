@@ -28,6 +28,8 @@ app.patch('/lists/:id', db.updateList)
 app.delete('/lists/:id', db.deleteList)
 app.get('/lists/user/:userid', db.getListsByUserId)
 
+app.post('/listsmovies', db.createListMovie)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
